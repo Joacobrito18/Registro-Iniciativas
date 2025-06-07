@@ -1,0 +1,157 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 1000px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#ff6b6b", "id": "Adri\u00e1n C", "label": "Adri\u00e1n C", "labelHighlightBold": true, "shape": "circle", "title": "Adri\u00e1n C"}, {"color": "#ff6b6b", "id": "Alexis P", "label": "Alexis P", "labelHighlightBold": true, "shape": "circle", "title": "Alexis P"}, {"color": "#ff6b6b", "id": "Antonieta K", "label": "Antonieta K", "labelHighlightBold": true, "shape": "circle", "title": "Antonieta K"}, {"color": "#ff6b6b", "id": "Andr\u00e9s VB", "label": "Andr\u00e9s VB", "labelHighlightBold": true, "shape": "circle", "title": "Andr\u00e9s VB"}, {"color": "#ff6b6b", "id": "Bel\u00e9n A", "label": "Bel\u00e9n A", "labelHighlightBold": true, "shape": "circle", "title": "Bel\u00e9n A"}, {"color": "#ff6b6b", "id": "Carlos J", "label": "Carlos J", "labelHighlightBold": true, "shape": "circle", "title": "Carlos J"}, {"color": "#ff6b6b", "id": "Carolina P", "label": "Carolina P", "labelHighlightBold": true, "shape": "circle", "title": "Carolina P"}, {"color": "#ff6b6b", "id": "Camila PS", "label": "Camila PS", "labelHighlightBold": true, "shape": "circle", "title": "Camila PS"}, {"color": "#ff6b6b", "id": "Darian Y", "label": "Darian Y", "labelHighlightBold": true, "shape": "circle", "title": "Darian Y"}, {"color": "#ff6b6b", "id": "Denise M", "label": "Denise M", "labelHighlightBold": true, "shape": "circle", "title": "Denise M"}, {"color": "#ff6b6b", "id": "Dayana M", "label": "Dayana M", "labelHighlightBold": true, "shape": "circle", "title": "Dayana M"}, {"color": "#ff6b6b", "id": "Ezequiel O", "label": "Ezequiel O", "labelHighlightBold": true, "shape": "circle", "title": "Ezequiel O"}, {"color": "#ff6b6b", "id": "Fernando R", "label": "Fernando R", "labelHighlightBold": true, "shape": "circle", "title": "Fernando R"}, {"color": "#ff6b6b", "id": "Fernando P", "label": "Fernando P", "labelHighlightBold": true, "shape": "circle", "title": "Fernando P"}, {"color": "#ff6b6b", "id": "Federico G", "label": "Federico G", "labelHighlightBold": true, "shape": "circle", "title": "Federico G"}, {"color": "#ff6b6b", "id": "Florencia R", "label": "Florencia R", "labelHighlightBold": true, "shape": "circle", "title": "Florencia R"}, {"color": "#ff6b6b", "id": "Federico V", "label": "Federico V", "labelHighlightBold": true, "shape": "circle", "title": "Federico V"}, {"color": "#ff6b6b", "id": "Gimena dVI", "label": "Gimena dVI", "labelHighlightBold": true, "shape": "circle", "title": "Gimena dVI"}, {"color": "#ff6b6b", "id": "Hugo IC", "label": "Hugo IC", "labelHighlightBold": true, "shape": "circle", "title": "Hugo IC"}, {"color": "#ff6b6b", "id": "Javier L", "label": "Javier L", "labelHighlightBold": true, "shape": "circle", "title": "Javier L"}, {"color": "#ff6b6b", "id": "Javier O", "label": "Javier O", "labelHighlightBold": true, "shape": "circle", "title": "Javier O"}, {"color": "#ff6b6b", "id": "Juan AV", "label": "Juan AV", "labelHighlightBold": true, "shape": "circle", "title": "Juan AV"}, {"color": "#ff6b6b", "id": "Juan CI", "label": "Juan CI", "labelHighlightBold": true, "shape": "circle", "title": "Juan CI"}, {"color": "#ff6b6b", "id": "Joaquin B", "label": "Joaquin B", "labelHighlightBold": true, "shape": "circle", "title": "Joaquin B"}, {"color": "#ff6b6b", "id": "Joaquin F", "label": "Joaquin F", "labelHighlightBold": true, "shape": "circle", "title": "Joaquin F"}, {"color": "#ff6b6b", "id": "Juan G", "label": "Juan G", "labelHighlightBold": true, "shape": "circle", "title": "Juan G"}, {"color": "#ff6b6b", "id": "Josefina V", "label": "Josefina V", "labelHighlightBold": true, "shape": "circle", "title": "Josefina V"}, {"color": "#ff6b6b", "id": "Luc\u00eda P", "label": "Luc\u00eda P", "labelHighlightBold": true, "shape": "circle", "title": "Luc\u00eda P"}, {"color": "#ff6b6b", "id": "Loana S", "label": "Loana S", "labelHighlightBold": true, "shape": "circle", "title": "Loana S"}, {"color": "#ff6b6b", "id": "Leandro A", "label": "Leandro A", "labelHighlightBold": true, "shape": "circle", "title": "Leandro A"}, {"color": "#ff6b6b", "id": "Luis FI", "label": "Luis FI", "labelHighlightBold": true, "shape": "circle", "title": "Luis FI"}, {"color": "#ff6b6b", "id": "Lucas ER", "label": "Lucas ER", "labelHighlightBold": true, "shape": "circle", "title": "Lucas ER"}, {"color": "#ff6b6b", "id": "Mariano L", "label": "Mariano L", "labelHighlightBold": true, "shape": "circle", "title": "Mariano L"}, {"color": "#ff6b6b", "id": "Mar\u00eda RM", "label": "Mar\u00eda RM", "labelHighlightBold": true, "shape": "circle", "title": "Mar\u00eda RM"}, {"color": "#ff6b6b", "id": "Mat\u00edas S", "label": "Mat\u00edas S", "labelHighlightBold": true, "shape": "circle", "title": "Mat\u00edas S"}, {"color": "#ff6b6b", "id": "Mariano PP", "label": "Mariano PP", "labelHighlightBold": true, "shape": "circle", "title": "Mariano PP"}, {"color": "#ff6b6b", "id": "Natalia D", "label": "Natalia D", "labelHighlightBold": true, "shape": "circle", "title": "Natalia D"}, {"color": "#ff6b6b", "id": "Natalia M", "label": "Natalia M", "labelHighlightBold": true, "shape": "circle", "title": "Natalia M"}, {"color": "#ff6b6b", "id": "Nicol\u00e1s P", "label": "Nicol\u00e1s P", "labelHighlightBold": true, "shape": "circle", "title": "Nicol\u00e1s P"}, {"color": "#ff6b6b", "id": "Paula V", "label": "Paula V", "labelHighlightBold": true, "shape": "circle", "title": "Paula V"}, {"color": "#ff6b6b", "id": "Pablo B", "label": "Pablo B", "labelHighlightBold": true, "shape": "circle", "title": "Pablo B"}, {"color": "#ff6b6b", "id": "Rodrigo A", "label": "Rodrigo A", "labelHighlightBold": true, "shape": "circle", "title": "Rodrigo A"}, {"color": "#ff6b6b", "id": "Tom\u00e1s T", "label": "Tom\u00e1s T", "labelHighlightBold": true, "shape": "circle", "title": "Tom\u00e1s T"}, {"color": "#ff6b6b", "id": "Valent\u00edn C", "label": "Valent\u00edn C", "labelHighlightBold": true, "shape": "circle", "title": "Valent\u00edn C"}, {"color": "#4ecdc4", "id": "Asistentes Bancarios", "label": "Asistentes Bancarios", "labelHighlightBold": true, "shape": "dot", "title": "Asistentes Bancarios"}, {"color": "#4ecdc4", "id": "AI Testing Conversacional", "label": "AI Testing Conversacional", "labelHighlightBold": true, "shape": "dot", "title": "AI Testing Conversacional"}, {"color": "#4ecdc4", "id": "Formulario con Audios E2", "label": "Formulario con Audios E2", "labelHighlightBold": true, "shape": "dot", "title": "Formulario con Audios E2"}, {"color": "#4ecdc4", "id": "Comparativo de Asistentes", "label": "Comparativo de Asistentes", "labelHighlightBold": true, "shape": "dot", "title": "Comparativo de Asistentes"}, {"color": "#4ecdc4", "id": "Implementaci\u00f3n Whatsapp", "label": "Implementaci\u00f3n Whatsapp", "labelHighlightBold": true, "shape": "dot", "title": "Implementaci\u00f3n Whatsapp"}, {"color": "#4ecdc4", "id": "Asistente de Pol\u00edticas Internas - Copilot", "label": "Asistente de Pol\u00edticas Internas - Copilot", "labelHighlightBold": true, "shape": "dot", "title": "Asistente de Pol\u00edticas Internas - Copilot"}, {"color": "#4ecdc4", "id": "LLM Research", "label": "LLM Research", "labelHighlightBold": true, "shape": "dot", "title": "LLM Research"}, {"color": "#4ecdc4", "id": "Conversacional Audio Formularios E1", "label": "Conversacional Audio Formularios E1", "labelHighlightBold": true, "shape": "dot", "title": "Conversacional Audio Formularios E1"}, {"color": "#4ecdc4", "id": "Athena E1", "label": "Athena E1", "labelHighlightBold": true, "shape": "dot", "title": "Athena E1"}, {"color": "#4ecdc4", "id": "Generador Ideas Comerciales", "label": "Generador Ideas Comerciales", "labelHighlightBold": true, "shape": "dot", "title": "Generador Ideas Comerciales"}, {"color": "#4ecdc4", "id": "STONEX", "label": "STONEX", "labelHighlightBold": true, "shape": "dot", "title": "STONEX"}, {"color": "#4ecdc4", "id": "Contratos Legales", "label": "Contratos Legales", "labelHighlightBold": true, "shape": "dot", "title": "Contratos Legales"}, {"color": "#4ecdc4", "id": "YPF - Flujogramas", "label": "YPF - Flujogramas", "labelHighlightBold": true, "shape": "dot", "title": "YPF - Flujogramas"}, {"color": "#4ecdc4", "id": "AI Testing", "label": "AI Testing", "labelHighlightBold": true, "shape": "dot", "title": "AI Testing"}, {"color": "#4ecdc4", "id": "Open Source LLM", "label": "Open Source LLM", "labelHighlightBold": true, "shape": "dot", "title": "Open Source LLM"}, {"color": "#4ecdc4", "id": "Tramarsa", "label": "Tramarsa", "labelHighlightBold": true, "shape": "dot", "title": "Tramarsa"}, {"color": "#4ecdc4", "id": "Calidad Asistente H\u00edbrido", "label": "Calidad Asistente H\u00edbrido", "labelHighlightBold": true, "shape": "dot", "title": "Calidad Asistente H\u00edbrido"}, {"color": "#4ecdc4", "id": "Testeo de Modelos de IA Generativa", "label": "Testeo de Modelos de IA Generativa", "labelHighlightBold": true, "shape": "dot", "title": "Testeo de Modelos de IA Generativa"}, {"color": "#4ecdc4", "id": "Human Feedback", "label": "Human Feedback", "labelHighlightBold": true, "shape": "dot", "title": "Human Feedback"}, {"color": "#4ecdc4", "id": "Asistente Empleados de Practia", "label": "Asistente Empleados de Practia", "labelHighlightBold": true, "shape": "dot", "title": "Asistente Empleados de Practia"}, {"color": "#4ecdc4", "id": "Asistente Pol\u00edticas Internas", "label": "Asistente Pol\u00edticas Internas", "labelHighlightBold": true, "shape": "dot", "title": "Asistente Pol\u00edticas Internas"}, {"color": "#4ecdc4", "id": "Detecci\u00f3n de Indumentaria", "label": "Detecci\u00f3n de Indumentaria", "labelHighlightBold": true, "shape": "dot", "title": "Detecci\u00f3n de Indumentaria"}, {"color": "#4ecdc4", "id": "Forecast - Fabric", "label": "Forecast - Fabric", "labelHighlightBold": true, "shape": "dot", "title": "Forecast - Fabric"}, {"color": "#4ecdc4", "id": "Forecast Azure ML", "label": "Forecast Azure ML", "labelHighlightBold": true, "shape": "dot", "title": "Forecast Azure ML"}, {"color": "#4ecdc4", "id": "Anomal\u00edas - Fabric", "label": "Anomal\u00edas - Fabric", "labelHighlightBold": true, "shape": "dot", "title": "Anomal\u00edas - Fabric"}, {"color": "#4ecdc4", "id": "Anomal\u00edas Azure ML", "label": "Anomal\u00edas Azure ML", "labelHighlightBold": true, "shape": "dot", "title": "Anomal\u00edas Azure ML"}, {"color": "#4ecdc4", "id": "Segmentaci\u00f3n Clientes - Fabric", "label": "Segmentaci\u00f3n Clientes - Fabric", "labelHighlightBold": true, "shape": "dot", "title": "Segmentaci\u00f3n Clientes - Fabric"}, {"color": "#4ecdc4", "id": "Segmentaci\u00f3n Clientes - Azure ML", "label": "Segmentaci\u00f3n Clientes - Azure ML", "labelHighlightBold": true, "shape": "dot", "title": "Segmentaci\u00f3n Clientes - Azure ML"}, {"color": "#4ecdc4", "id": "Minera Centinela", "label": "Minera Centinela", "labelHighlightBold": true, "shape": "dot", "title": "Minera Centinela"}, {"color": "#4ecdc4", "id": "Lubricantes ENEX", "label": "Lubricantes ENEX", "labelHighlightBold": true, "shape": "dot", "title": "Lubricantes ENEX"}, {"color": "#4ecdc4", "id": "RL - Minera Centinela E1", "label": "RL - Minera Centinela E1", "labelHighlightBold": true, "shape": "dot", "title": "RL - Minera Centinela E1"}, {"color": "#4ecdc4", "id": "Anomal\u00edas Equipos Rotativos", "label": "Anomal\u00edas Equipos Rotativos", "labelHighlightBold": true, "shape": "dot", "title": "Anomal\u00edas Equipos Rotativos"}, {"color": "#4ecdc4", "id": "VideoIndexer E1", "label": "VideoIndexer E1", "labelHighlightBold": true, "shape": "dot", "title": "VideoIndexer E1"}, {"color": "#4ecdc4", "id": "RL - Minera Centinela E2", "label": "RL - Minera Centinela E2", "labelHighlightBold": true, "shape": "dot", "title": "RL - Minera Centinela E2"}, {"color": "#4ecdc4", "id": "Stonex", "label": "Stonex", "labelHighlightBold": true, "shape": "dot", "title": "Stonex"}]);
+                  edges = new vis.DataSet([{"color": "#292f36", "from": "Adri\u00e1n C", "to": "Asistentes Bancarios"}, {"color": "#292f36", "from": "Adri\u00e1n C", "to": "AI Testing Conversacional"}, {"color": "#292f36", "from": "Adri\u00e1n C", "to": "Asistente de Pol\u00edticas Internas - Copilot"}, {"color": "#292f36", "from": "Adri\u00e1n C", "to": "Asistente Empleados de Practia"}, {"color": "#292f36", "from": "Adri\u00e1n C", "to": "Asistente Pol\u00edticas Internas"}, {"color": "#292f36", "from": "Alexis P", "to": "Forecast Azure ML"}, {"color": "#292f36", "from": "Alexis P", "to": "Anomal\u00edas Azure ML"}, {"color": "#292f36", "from": "Antonieta K", "to": "AI Testing Conversacional"}, {"color": "#292f36", "from": "Antonieta K", "to": "Asistente de Pol\u00edticas Internas - Copilot"}, {"color": "#292f36", "from": "Antonieta K", "to": "Conversacional Audio Formularios E1"}, {"color": "#292f36", "from": "Antonieta K", "to": "Athena E1"}, {"color": "#292f36", "from": "Antonieta K", "to": "Human Feedback"}, {"color": "#292f36", "from": "Andr\u00e9s VB", "to": "Anomal\u00edas Equipos Rotativos"}, {"color": "#292f36", "from": "Bel\u00e9n A", "to": "Generador Ideas Comerciales"}, {"color": "#292f36", "from": "Bel\u00e9n A", "to": "STONEX"}, {"color": "#292f36", "from": "Bel\u00e9n A", "to": "Contratos Legales"}, {"color": "#292f36", "from": "Bel\u00e9n A", "to": "YPF - Flujogramas"}, {"color": "#292f36", "from": "Bel\u00e9n A", "to": "AI Testing"}, {"color": "#292f36", "from": "Bel\u00e9n A", "to": "Open Source LLM"}, {"color": "#292f36", "from": "Bel\u00e9n A", "to": "Tramarsa"}, {"color": "#292f36", "from": "Bel\u00e9n A", "to": "Calidad Asistente H\u00edbrido"}, {"color": "#292f36", "from": "Carlos J", "to": "Forecast Azure ML"}, {"color": "#292f36", "from": "Carlos J", "to": "Anomal\u00edas Azure ML"}, {"color": "#292f36", "from": "Carolina P", "to": "Asistente de Pol\u00edticas Internas - Copilot"}, {"color": "#292f36", "from": "Camila PS", "to": "VideoIndexer E1"}, {"color": "#292f36", "from": "Camila PS", "to": "Athena E1"}, {"color": "#292f36", "from": "Darian Y", "to": "Human Feedback"}, {"color": "#292f36", "from": "Denise M", "to": "AI Testing Conversacional"}, {"color": "#292f36", "from": "Denise M", "to": "LLM Research"}, {"color": "#292f36", "from": "Denise M", "to": "Testeo de Modelos de IA Generativa"}, {"color": "#292f36", "from": "Dayana M", "to": "AI Testing Conversacional"}, {"color": "#292f36", "from": "Dayana M", "to": "YPF - Flujogramas"}, {"color": "#292f36", "from": "Dayana M", "to": "Open Source LLM"}, {"color": "#292f36", "from": "Dayana M", "to": "Calidad Asistente H\u00edbrido"}, {"color": "#292f36", "from": "Ezequiel O", "to": "AI Testing Conversacional"}, {"color": "#292f36", "from": "Ezequiel O", "to": "YPF - Flujogramas"}, {"color": "#292f36", "from": "Ezequiel O", "to": "AI Testing"}, {"color": "#292f36", "from": "Ezequiel O", "to": "Open Source LLM"}, {"color": "#292f36", "from": "Ezequiel O", "to": "Calidad Asistente H\u00edbrido"}, {"color": "#292f36", "from": "Fernando R", "to": "VideoIndexer E1"}, {"color": "#292f36", "from": "Fernando P", "to": "Lubricantes ENEX"}, {"color": "#292f36", "from": "Fernando P", "to": "RL - Minera Centinela E1"}, {"color": "#292f36", "from": "Fernando P", "to": "RL - Minera Centinela E2"}, {"color": "#292f36", "from": "Federico G", "to": "RL - Minera Centinela E1"}, {"color": "#292f36", "from": "Federico G", "to": "RL - Minera Centinela E2"}, {"color": "#292f36", "from": "Federico G", "to": "VideoIndexer E1"}, {"color": "#292f36", "from": "Florencia R", "to": "YPF - Flujogramas"}, {"color": "#292f36", "from": "Florencia R", "to": "AI Testing"}, {"color": "#292f36", "from": "Florencia R", "to": "Open Source LLM"}, {"color": "#292f36", "from": "Florencia R", "to": "Tramarsa"}, {"color": "#292f36", "from": "Federico V", "to": "Asistente Empleados de Practia"}, {"color": "#292f36", "from": "Gimena dVI", "to": "VideoIndexer E1"}, {"color": "#292f36", "from": "Gimena dVI", "to": "Minera Centinela"}, {"color": "#292f36", "from": "Gimena dVI", "to": "Detecci\u00f3n de Indumentaria"}, {"color": "#292f36", "from": "Hugo IC", "to": "VideoIndexer E1"}, {"color": "#292f36", "from": "Javier L", "to": "Generador Ideas Comerciales"}, {"color": "#292f36", "from": "Javier L", "to": "Stonex"}, {"color": "#292f36", "from": "Javier L", "to": "Tramarsa"}, {"color": "#292f36", "from": "Javier L", "to": "Forecast Azure ML"}, {"color": "#292f36", "from": "Javier L", "to": "Anomal\u00edas Azure ML"}, {"color": "#292f36", "from": "Javier L", "to": "Segmentaci\u00f3n Clientes - Azure ML"}, {"color": "#292f36", "from": "Javier L", "to": "Minera Centinela"}, {"color": "#292f36", "from": "Javier L", "to": "Anomal\u00edas Equipos Rotativos"}, {"color": "#292f36", "from": "Javier O", "to": "Contratos Legales"}, {"color": "#292f36", "from": "Javier O", "to": "Detecci\u00f3n de Indumentaria"}, {"color": "#292f36", "from": "Javier O", "to": "Forecast Azure ML"}, {"color": "#292f36", "from": "Javier O", "to": "Anomal\u00edas Azure ML"}, {"color": "#292f36", "from": "Javier O", "to": "Segmentaci\u00f3n Clientes - Azure ML"}, {"color": "#292f36", "from": "Juan AV", "to": "Testeo de Modelos de IA Generativa"}, {"color": "#292f36", "from": "Juan CI", "to": "AI Testing Conversacional"}, {"color": "#292f36", "from": "Juan CI", "to": "LLM Research"}, {"color": "#292f36", "from": "Juan CI", "to": "Testeo de Modelos de IA Generativa"}, {"color": "#292f36", "from": "Joaquin B", "to": "Asistentes Bancarios"}, {"color": "#292f36", "from": "Joaquin B", "to": "AI Testing Conversacional"}, {"color": "#292f36", "from": "Joaquin B", "to": "Formulario con Audios E2"}, {"color": "#292f36", "from": "Joaquin B", "to": "Comparativo de Asistentes"}, {"color": "#292f36", "from": "Joaquin B", "to": "Implementaci\u00f3n Whatsapp"}, {"color": "#292f36", "from": "Joaquin B", "to": "LLM Research"}, {"color": "#292f36", "from": "Joaquin B", "to": "Conversacional Audio Formularios E1"}, {"color": "#292f36", "from": "Joaquin B", "to": "Athena E1"}, {"color": "#292f36", "from": "Joaquin B", "to": "Asistente Empleados de Practia"}, {"color": "#292f36", "from": "Joaquin B", "to": "Asistente Pol\u00edticas Internas"}, {"color": "#292f36", "from": "Joaquin F", "to": "RL - Minera Centinela E1"}, {"color": "#292f36", "from": "Joaquin F", "to": "RL - Minera Centinela E2"}, {"color": "#292f36", "from": "Juan G", "to": "Asistentes Bancarios"}, {"color": "#292f36", "from": "Juan G", "to": "Asistente de Pol\u00edticas Internas - Copilot"}, {"color": "#292f36", "from": "Josefina V", "to": "YPF - Flujogramas"}, {"color": "#292f36", "from": "Josefina V", "to": "AI Testing"}, {"color": "#292f36", "from": "Josefina V", "to": "Open Source LLM"}, {"color": "#292f36", "from": "Luc\u00eda P", "to": "Asistente de Pol\u00edticas Internas - Copilot"}, {"color": "#292f36", "from": "Loana S", "to": "AI Testing Conversacional"}, {"color": "#292f36", "from": "Loana S", "to": "LLM Research"}, {"color": "#292f36", "from": "Loana S", "to": "Testeo de Modelos de IA Generativa"}, {"color": "#292f36", "from": "Leandro A", "to": "Formulario con Audios E2"}, {"color": "#292f36", "from": "Leandro A", "to": "Comparativo de Asistentes"}, {"color": "#292f36", "from": "Leandro A", "to": "Implementaci\u00f3n Whatsapp"}, {"color": "#292f36", "from": "Leandro A", "to": "Calidad Asistente H\u00edbrido"}, {"color": "#292f36", "from": "Leandro A", "to": "Asistente Pol\u00edticas Internas"}, {"color": "#292f36", "from": "Luis FI", "to": "Contratos Legales"}, {"color": "#292f36", "from": "Luis FI", "to": "Detecci\u00f3n de Indumentaria"}, {"color": "#292f36", "from": "Luis FI", "to": "Forecast Azure ML"}, {"color": "#292f36", "from": "Luis FI", "to": "Anomal\u00edas Azure ML"}, {"color": "#292f36", "from": "Luis FI", "to": "Segmentaci\u00f3n Clientes - Azure ML"}, {"color": "#292f36", "from": "Lucas ER", "to": "Segmentaci\u00f3n Clientes - Fabric"}, {"color": "#292f36", "from": "Lucas ER", "to": "Detecci\u00f3n de Indumentaria"}, {"color": "#292f36", "from": "Lucas ER", "to": "Anomal\u00edas - Fabric"}, {"color": "#292f36", "from": "Lucas ER", "to": "Forecast - Fabric"}, {"color": "#292f36", "from": "Mariano L", "to": "Athena E1"}, {"color": "#292f36", "from": "Mariano L", "to": "Asistentes Bancarios"}, {"color": "#292f36", "from": "Mariano L", "to": "Asistente de Pol\u00edticas Internas - Copilot"}, {"color": "#292f36", "from": "Mar\u00eda RM", "to": "Minera Centinela"}, {"color": "#292f36", "from": "Mat\u00edas S", "to": "Athena E1"}, {"color": "#292f36", "from": "Mariano PP", "to": "Human Feedback"}, {"color": "#292f36", "from": "Natalia D", "to": "Open Source LLM"}, {"color": "#292f36", "from": "Natalia D", "to": "Anomal\u00edas Equipos Rotativos"}, {"color": "#292f36", "from": "Natalia M", "to": "Segmentaci\u00f3n Clientes - Fabric"}, {"color": "#292f36", "from": "Natalia M", "to": "Anomal\u00edas - Fabric"}, {"color": "#292f36", "from": "Natalia M", "to": "Forecast - Fabric"}, {"color": "#292f36", "from": "Nicol\u00e1s P", "to": "Athena E1"}, {"color": "#292f36", "from": "Nicol\u00e1s P", "to": "Human Feedback"}, {"color": "#292f36", "from": "Paula V", "to": "Anomal\u00edas Equipos Rotativos"}, {"color": "#292f36", "from": "Paula V", "to": "RL - Minera Centinela E1"}, {"color": "#292f36", "from": "Paula V", "to": "RL - Minera Centinela E2"}, {"color": "#292f36", "from": "Paula V", "to": "Lubricantes ENEX"}, {"color": "#292f36", "from": "Paula V", "to": "VideoIndexer E1"}, {"color": "#292f36", "from": "Pablo B", "to": "Formulario con Audios E2"}, {"color": "#292f36", "from": "Pablo B", "to": "Comparativo de Asistentes"}, {"color": "#292f36", "from": "Pablo B", "to": "Implementaci\u00f3n Whatsapp"}, {"color": "#292f36", "from": "Pablo B", "to": "AI Testing"}, {"color": "#292f36", "from": "Pablo B", "to": "Calidad Asistente H\u00edbrido"}, {"color": "#292f36", "from": "Rodrigo A", "to": "Athena E1"}, {"color": "#292f36", "from": "Rodrigo A", "to": "Implementaci\u00f3n Whatsapp"}, {"color": "#292f36", "from": "Tom\u00e1s T", "to": "AI Testing"}, {"color": "#292f36", "from": "Valent\u00edn C", "to": "Conversacional Audio Formularios E1"}, {"color": "#292f36", "from": "Valent\u00edn C", "to": "Athena E1"}, {"color": "#292f36", "from": "Valent\u00edn C", "to": "Human Feedback"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+                    network.on("click", neighbourhoodHighlight);
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
